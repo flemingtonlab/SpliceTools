@@ -195,7 +195,8 @@ Generates:
 * Summary file with average sizes (for comparison, includes average sizes for potential SE events based on input annotation file).
 
 ##### Usage ##### 
-``` perl SEIntronExonSizes.pl \
+```
+perl SEIntronExonSizes.pl \
 -s <skipped exon file (rMATS JCEC)> \
 -a <bed12 annotation file> \
 -f <FDR>
