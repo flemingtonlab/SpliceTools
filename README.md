@@ -378,7 +378,7 @@ perl SEUnannotated.pl \
 ### SpliceCompare ###
 Takes groups of rMATS differential splicing files and outputs lists of statistically significant events with positive IncDiff and negative IncDiff and summary files. It then compares differential splicing changes across experiments to assess functional relationships (hypergeometric test), outputting pval matrices, -log10(pval) matrices, and .svg graphical representation files displaying -log10(pval) of all comparisons.
 
-*Important notes:
+Important notes:
  * Input file names must end in one or more of the following suffexes:
 		A3SS.MATS.JCEC.txt
 		A5SS.MATS.JCEC.txt
