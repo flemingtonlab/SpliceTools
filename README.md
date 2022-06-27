@@ -264,9 +264,9 @@ Generates:
 ##### Usage #####
 ```
 SENumberSkipped.pl \
--s <skipped exon file (rMATS JCEC)> \
--a <bed12 annotation file> \
--f <FDR>
+	-s <skipped exon file (rMATS JCEC)> \
+	-a <bed12 annotation file> \
+	-f <FDR>
 ```
 
 ##### Required #####
