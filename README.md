@@ -31,11 +31,11 @@ Generates:
 ##### Usage #####
 ```
 perl RIFractionExpressed.pl \
--r <retained intron file (rMATS JCEC)> \
--e <expression file> \
--TPM <min TPMs condition 1,min TPMs condition 2> \
--SN <sample number condition 1,sample number condition 2> \
--f <FDR>
+	-r <retained intron file (rMATS JCEC)> \
+	-e <expression file> \
+	-TPM <min TPMs condition 1,min TPMs condition 2> \
+	-SN <sample number condition 1,sample number condition 2> \
+	-f <FDR>
 ```
 
 ##### Required #####
@@ -97,13 +97,13 @@ Automatically runs the following on an rMATS RI JCEC file:
 
 ```
 perl RIMedley.pl \
--r <retained intron file (rMATS JCEC)> \
--a <bed12 annotation file> \
--g <genome fasta file> \
--e <expression file> \
--TPM <min TPMs condition 1,min TPMs condition 2> \
--SN <sample number condition 1,sample number condition2> \
--f <FDR>
+	-r <retained intron file (rMATS JCEC)> \
+	-a <bed12 annotation file> \
+	-g <genome fasta file> \
+	-e <expression file> \
+	-TPM <min TPMs condition 1,min TPMs condition 2> \
+	-SN <sample number condition 1,sample number condition2> \
+	-f <FDR>
 ```
 
 ##### Required #####
@@ -132,10 +132,10 @@ Generates:
 ##### Usage #####
 ```
 perl RISpliceSiteScoring.pl \
--r <retained intron file (rMATS JCEC)> \
--g <genome fasta file> \
--f <FDR> \
--a <bed12 annotation file>
+	-r <retained intron file (rMATS JCEC)> \
+	-g <genome fasta file> \
+	-f <FDR> \
+	-a <bed12 annotation file>
 ```
 
 ##### Required #####
@@ -164,11 +164,11 @@ Also generates:
 ##### Usage #####
 ```
 perl SEFractionExpressed.pl \
--s <skipped exon file (rMATS JCEC)> \
--e <expression file> \
--TPM <min TPMs condition 1,min TPMs condition 2> \
--SN <sample number condition 1,sample number condition 2> \
--f <FDR>
+	-s <skipped exon file (rMATS JCEC)> \
+	-e <expression file> \
+	-TPM <min TPMs condition 1,min TPMs condition 2> \
+	-SN <sample number condition 1,sample number condition 2> \
+	-f <FDR>
 ```
 ##### Required #####
 	-s <skipped exon file>
@@ -229,13 +229,13 @@ Automatically runs the following on an rMATS SE JCEC file:
 ##### Usage ##### 
 ```
 SEMedley.pl \
--s <skipped exon file (rMATS JCEC)> \
--a <bed12 annotation file> \
--g <genome fasta file> \
--e <expression file> \
--TPM <min TPMs condition 1,min TPMs condition 2> \
--SN <sample number condition 1,sample number condition2> \
--f <FDR>
+	-s <skipped exon file (rMATS JCEC)> \
+	-a <bed12 annotation file> \
+	-g <genome fasta file> \
+	-e <expression file> \
+	-TPM <min TPMs condition 1,min TPMs condition 2> \
+	-SN <sample number condition 1,sample number condition2> \
+	-f <FDR>
 ```
 ##### Required #####
 	-s <skipped exon file>
@@ -295,10 +295,10 @@ Generates:
 ##### Usage #####
 ```
 perl SESpliceSiteScoring.pl \
--s <skipped exon file (rMATS JCEC)> \
--g <genome fasta file> \
--f <FDR> \
--a <bed12 annotation file>
+	-s <skipped exon file (rMATS JCEC)> \
+	-g <genome fasta file> \
+	-f <FDR> \
+	-a <bed12 annotation file>
 ```
 ##### Required #####
 	-s <skipped exon file>
@@ -329,10 +329,10 @@ Program will:
 ##### Usage #####
 ```
 perl SETranslateNMD.pl \
--s <skipped exon file (rMATS)> \
--a <bed12 annotation file> \
--g <genome fasta file> \
--f <FDR>
+	-s <skipped exon file (rMATS)> \
+	-a <bed12 annotation file> \
+	-g <genome fasta file> \
+	-f <FDR>
 ```
 ##### Required #####
 	-s <skipped exon file>
@@ -356,9 +356,9 @@ Generates statistics on the number of skipping events that are present (annotate
 ##### Usage #####
 ```
 perl SEUnannotated.pl \
--s <skipped exon file (rMATS)> \
--a <bed12 annotation file> \
--f <FDR>
+	-s <skipped exon file (rMATS)> \
+	-a <bed12 annotation file> \
+	-f <FDR>
 ```
 
 ##### Required #####
@@ -394,9 +394,9 @@ Important notes:
 ##### Usage #####
 ```
 perl SpliceCompare.pl \
--i <input files directory (rMATS JCEC)> \
--o <path to output directory> \
--f <FDR>
+	-i <input files directory (rMATS JCEC)> \
+	-o <path to output directory> \
+	-f <FDR>
 ```
 ##### Required #####
 	-i <input files directory (rMATS JCEC)>
