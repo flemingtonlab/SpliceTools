@@ -11,41 +11,24 @@ Python libraries:
 Perl libraries:
 * Parallel::ForkManager 
 
-
 ## File formats ##
 ### Differential splicing files ###
-
 | File  | Description |
 | :-- | :-- |
 | *AS files*  | Must be in rMATS[^1][^2][^3] output tsv format. SpliceTools utilizes columns 2-11, 20 and 23 of A3SS, A5SS, RI, and SE files and 2-13, 22, and 25 of rMATS MXE files (see [rMATS_file_formats.xlsx](https://github.com/flemingtonlab/SpliceTools/files/8995041/rMATS_file_formats.xlsx)) for those interested in converting other file formats for use in SpliceTools. |
 | *BED12 annotation*  | Bed12 file format should be used with Gene ID column (column 4) containing the ENSEMBL ID and gene ID separated by an underscore (for example, “ENST00000456328_DDX11L1“).  |
 | *Genome fasta* | Standard genome fasta file (can be wrapped or unwrapped). |
 | *Gene expression file* | TSV file with *gene ID* in first column, *control TPM values* in following columns, *test TPM values* in the columns following control TPM values |
-
 ## Usage ##
-
 ### RIFractionExpressed ###
-
 Determines the fraction of expressed genes with statistically significant RI events at genes with a minimum input control or test TPM value.
 
 Generates:
-
 * lists of statistically significant negative and positive IncDiff RI events in expressed genes (includes gene expression values for each)
 	  
 * file with list of genes without statistcially significant change in RI.
 
-#### Required ####
-	-r <retained intron file>
-	-e <expression file>
-	-TPM <min TPMs condition 1,min TPMs condition 2>
-		Note: if condition 1 or 2 to be not considered, enter "-"
-		(e.g. TPM 3,- or TPM -,3)
-	-SN <sample number condition 1,sample number condition 2>
-	-f <FDR>
-
-#### Additional ####
-	-h help
-#### Usage ####
+##### Usage #####
 ```
 perl RIFractionExpressed.pl \
 -r <retained intron file (rMATS JCEC)> \
@@ -55,68 +38,62 @@ perl RIFractionExpressed.pl \
 -f <FDR>
 ```
 
-
-#### Example ####
+##### Required #####
+	-r <retained intron file>
+	-e <expression file>
+	-TPM <min TPMs condition 1,min TPMs condition 2>
+		Note: if condition 1 or 2 to be not considered, enter "-"
+		(e.g. TPM 3,- or TPM -,3)
+	-SN <sample number condition 1,sample number condition 2>
+	-f <FDR>
+	
+##### Additional #####
+	-h help
+	
+##### Example #####
 ```
 RIFractionExpressed.pl -r PATH/RIfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
 ```
 
-#### Batch script ####
-
+##### Batch script #####
 ```perl RIFractionExpressedBatch.pl -r PATH/RI_files_directory -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
 
 
-### RIIntronExonSizes ###
 
+### RIIntronExonSizes ###
 Generates:
 * Lists of sizes for upstream exon, retained intron, and downstream exon for statistically significant positive and negative IncDiff retained intron events
 * Summary file with average sizes
-	
-#### Required ####
-	-r <retained intron file>
-	-a <bed12 annotation file>
-	-f <FDR>
 
-#### Additional ####
-	-h help
-
-#### Usage ####
+##### Usage #####
 ```
 perl RIIntronExonSizes.pl \
 	-r <retained intron file (rMATS JCEC)> \
 	-a <bed12 annotation file> \
 	-f <FDR>
 ```
-	
+##### Required #####
+	-r <retained intron file>
+	-a <bed12 annotation file>
+	-f <FDR>
 
-#### Example ####
+##### Additional #####
+	-h help
 
+##### Example #####
 ```perl RIIntronExonSizes.pl -r PATH/RIfile.txt -a PATH/bed12_annotation_file -f 0.05```
 
-#### Batch script ####
-
+##### Batch script #####
 ```perl RIIntronExonSizesBatch.pl -r PATH/RI_input_files_directory -a PATH/bed12_annotation_file -f 0.05```
 
-### RIMedley ###
 
+### RIMedley ###
 Automatically runs the following on an rMATS RI JCEC file:
 * RIFractionExpressed.pl
 * RIIntronExonSizes.pl
 * RISpliceSiteScoring.pl
 
-#### Required ####
-	-r <retained intron file>
-	-a <bed12 annotation file>
-	-g <genome fasta file>
-	-e <expression file>
-	-TPM <min TPMs condition 1,min TPMs condition 2>
-	-SN <sample number condition 1,sample number condition 2>
-	-f <FDR>
-
-#### Additional ####
-	-h help
-	
-#### Usage ####
+##### Usage #####
 
 ```
 perl RIMedley.pl \
@@ -129,19 +106,30 @@ perl RIMedley.pl \
 -f <FDR>
 ```
 
-#### Example #### 
+##### Required #####
+	-r <retained intron file>
+	-a <bed12 annotation file>
+	-g <genome fasta file>
+	-e <expression file>
+	-TPM <min TPMs condition 1,min TPMs condition 2>
+	-SN <sample number condition 1,sample number condition 2>
+	-f <FDR>
+
+##### Additional #####
+	-h help
+	
+##### Example ##### 
 ```perl RIMedley.pl -r PATH/RIfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
 
 
 ### RISpliceSiteScoring ###
-
 Generates:
 * Lists of splice site scores (for plotting score distributions) for upstream donor and downstream acceptor sites for statistically significantly changed retained intron events
 * Summary file with average scores
 
 *Note: Inclusion of annotation file is optional but will generate data for annotated events for comparison.*
 
-#### Usage ####
+##### Usage #####
 ```
 perl RISpliceSiteScoring.pl \
 -r <retained intron file (rMATS JCEC)> \
@@ -150,32 +138,30 @@ perl RISpliceSiteScoring.pl \
 -a <bed12 annotation file>
 ```
 
-#### Required ####
+##### Required #####
 	-r <retained intron file>
 	-g <genome fasta file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-a <bed12 annotation file> (optional)
 	-h help
 
-
-#### Example ####
+##### Example #####
 ```perl RISpliceSiteScoring.pl -r PATH/RIfile.txt -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05```
 
-#### Batch script ####
+##### Batch script #####
 ```perl RISpliceSiteScoring.pl -r PATH/RI_input_files_directory -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05```
 
 
 ### SEFractionExpressed ###
-
 Determines the fraction of expressed genes with statistically significant SE events at genes with a minimum input control or test TPM value.
 
 Also generates:
 * Lists of statistically significant negative and positive IncDiff SE events in expressed genes (includes gene expression values for each)
 * File with list of genes without statistcially significant exon skipping.
 
-#### Usage ####
+##### Usage #####
 ```
 perl SEFractionExpressed.pl \
 -s <skipped exon file (rMATS JCEC)> \
@@ -184,7 +170,7 @@ perl SEFractionExpressed.pl \
 -SN <sample number condition 1,sample number condition 2> \
 -f <FDR>
 ```
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-e <expression file>
 	-TPM <min TPMs condition 1,min TPMs condition 2>
@@ -193,43 +179,44 @@ perl SEFractionExpressed.pl \
 	-SN <sample number condition 1,sample number condition 2>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SEFractionExpressed.pl -s PATH/SEfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
 
-#### Batch script ####
+##### Batch script #####
 ```perl SEFractionExpressedBatch.pl -s PATH/SE_input_files_directory -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
+
 
 ### SEIntronExonSizes ###
 Generates:
 * Lists of sizes for upstream exon, upstream intron, skipped exon, downstream intron, and downstream exon for statistically significant positive and negative IncDiff skipped exon events.
 * Summary file with average sizes (for comparison, includes average sizes for potential SE events based on input annotation file).
 
-#### Usage #### 
+##### Usage ##### 
 ``` perl SEIntronExonSizes.pl \
 -s <skipped exon file (rMATS JCEC)> \
 -a <bed12 annotation file> \
 -f <FDR>
 ```
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-a <bed12 annotation file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SEIntronExonSizes.pl -s PATH/SEfile.txt -a PATH/bed12_annotation_file.bed -f 0.05```
 
 
-#### Batch script ####
+##### Batch script #####
 ```perl SEIntronExonSizesBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -f 0.05```
 
-### SEMedley ###
 
+### SEMedley ###
 Automatically runs the following on an rMATS SE JCEC file:
 * SEFractionExpressed.pl
 * SEIntronExonSizes.pl
@@ -238,7 +225,7 @@ Automatically runs the following on an rMATS SE JCEC file:
 * SETranslateNMD.pl
 * SEUnannotated.pl
 
-#### Usage #### 
+##### Usage ##### 
 ```
 SEMedley.pl \
 -s <skipped exon file (rMATS JCEC)> \
@@ -249,7 +236,7 @@ SEMedley.pl \
 -SN <sample number condition 1,sample number condition2> \
 -f <FDR>
 ```
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-a <bed12 annotation file>
 	-g <genome fasta file>
@@ -257,14 +244,14 @@ SEMedley.pl \
 	-TPM <min TPMs condition 1,min TPMs condition 2>
 	-SN <sample number condition 1,sample number condition 2>-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SEMedley.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
 
-### SENumberSkipped ###
 
+### SENumberSkipped ###
 Generates:
 * Lists of all predicted SE isoforms with number of exons skipped
 * Lists of isoforms with maximum number of skipped exons
@@ -273,8 +260,7 @@ Generates:
 *Note: Uses annotated exon information to determine number of exons skipped
 (0 exons skipped means that skipped exons were not in annotation file)*
 
-
-#### Usage ####
+##### Usage #####
 ```
 SENumberSkipped.pl \
 -s <skipped exon file (rMATS JCEC)> \
@@ -282,31 +268,30 @@ SENumberSkipped.pl \
 -f <FDR>
 ```
 
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-a <bed12 annotation file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
 #### Example ####
 ```perl SENumberSkipped.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05```
 
-
-#### Batch script ####
+##### Batch script #####
 
 ```perl SENumberSkippedBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -f 0.05```
 
-### SESpliceSiteScoring ###
 
+### SESpliceSiteScoring ###
 Generates:
 * Lists of splice site scores (for plotting score distributions) for upstream donor, skipped exon, and downstream acceptor sites for statistically significantly changed exon skipping events.
 * Summary file with average scores.
 
 *Note: Inclusion of annotation file is optional but will generate data for annotated events for comparison.*
 
-#### Usage ####
+##### Usage #####
 ```
 perl SESpliceSiteScoring.pl \
 -s <skipped exon file (rMATS JCEC)> \
@@ -314,20 +299,21 @@ perl SESpliceSiteScoring.pl \
 -f <FDR> \
 -a <bed12 annotation file>
 ```
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-g <genome fasta file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-a <bed12 annotation file> (optional)
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SESpliceSiteScoring.pl -s PATH/SEfile.txt -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05```
 
-#### Batch script ####
+##### Batch script #####
 ```perl SESpliceSiteScoringBatch.pl -s PATH/SE_input_files_directory -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05 ```
+
 
 ### SETranslateNMD ###
 
@@ -339,8 +325,7 @@ Program will:
 * Generate lists of skipped exon protein sequences for in-frame events for BATCH submission to NCBI conserved domain search (https://www.ncbi.nlm.nih.gov/Structure/bwrpsb/bwrpsb.cgi)
 * Identify events predicted to undergo Nonsense Mediated RNA Decay (NMD) and generate statistics on skipping events predicted to undergo and not undergo NMD
 
-
-#### Usage ####
+##### Usage #####
 ```
 perl SETranslateNMD.pl \
 -s <skipped exon file (rMATS)> \
@@ -348,27 +333,26 @@ perl SETranslateNMD.pl \
 -g <genome fasta file> \
 -f <FDR>
 ```
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-a <bed12 annotation file>
 	-g <genome fasta file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SETranslateNMD.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -f 0.05```
 
-#### Batch script ####
-
+##### Batch script #####
 ```perl SETranslateNMDBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -g PATH/genome.fa -f 0.05```
 
-### SEUnannotated ###
 
+### SEUnannotated ###
 Generates statistics on the number of skipping events that are present (annotated) and not present (unannotated) in a bed12 input annotation file. Also outputs lists of annotated and unannotated events (pos IncDiff and neg IncDiff).
 
-### Usage ###
+##### Usage #####
 ```
 perl SEUnannotated.pl \
 -s <skipped exon file (rMATS)> \
@@ -376,27 +360,25 @@ perl SEUnannotated.pl \
 -f <FDR>
 ```
 
-#### Required ####
+##### Required #####
 	-s <skipped exon file>
 	-a <bed12 annotation file>
 	-f <FDR>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SEUnannotated.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05```
 
-
-#### Batch script ####
+##### Batch script #####
 ```perl SEUnannotatedBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -f 0.05```
 
 
 ### SpliceCompare ###
-
 Takes groups of rMATS differential splicing files and outputs lists of statistically significant events with positive IncDiff and negative IncDiff and summary files. It then compares differential splicing changes across experiments to assess functional relationships (hypergeometric test), outputting pval matrices, -log10(pval) matrices, and .svg graphical representation files displaying -log10(pval) of all comparisons.
 
-Important notes:
+*Important notes:
  * Input file names must end in one or more of the following suffexes:
 		A3SS.MATS.JCEC.txt
 		A5SS.MATS.JCEC.txt
@@ -406,28 +388,28 @@ Important notes:
 
 * By default, SpliceCompare.pl generates a file of common splicing changes for each comparison. For large numbers of input files, this can lead to the generation of millions of comparison files. Use option -p 0 to suppress this output.
 
-* By default, -log10(pval) maximum is 280. For experiments with less significant hypergeometric test values, max -log10(pval) can be decreased using -m option.
+* By default, -log10(pval) maximum is 280. For experiments with less significant hypergeometric test values, max -log10(pval) can be decreased using -m option.*
 
-#### Usage ####
+##### Usage #####
 ```
 perl SpliceCompare.pl \
 -i <input files directory (rMATS JCEC)> \
 -o <path to output directory> \
 -f <FDR>
 ```
-#### Required ####
+##### Required #####
 	-i <input files directory (rMATS JCEC)>
 	-o <path to output directory>
 	-f <FDR>
 
-#### Optional ####
+##### Optional #####
 	-p <1=output overlap files (default), 0=no overlap files>
 	-m <max cluster array value (default = 280)>
 
-#### Additional ####
+##### Additional #####
 	-h help
 
-#### Example ####
+##### Example #####
 ```perl SpliceCompare.pl -i PATH/input_files_directory -o PATH/output_files_directory -m 280 -p 1 -f 0.05```
 
 
