@@ -17,25 +17,25 @@ Perl libraries:
 
 | File  | Description |
 | ------------- | ------------- |
-| *AS files*  | Must be in rMATS (refs. 1,2,3) output tsv format. SpliceTools utilizes columns 2-11, 20 and 23 of A3SS, A5SS, RI, and SE files and 2-13, 22, and 25 of rMATS MXE files (see rMATS file formats (rMATS_file_formats.xlsx)) for those interested in converting other file formats for use in SpliceTools. |
+| *AS files*  | Must be in rMATS[^1][^2][^3] output tsv format. SpliceTools utilizes columns 2-11, 20 and 23 of A3SS, A5SS, RI, and SE files and 2-13, 22, and 25 of rMATS MXE files (see [rMATS_file_formats.xlsx](https://github.com/flemingtonlab/SpliceTools/files/8995041/rMATS_file_formats.xlsx)) for those interested in converting other file formats for use in SpliceTools. |
 | *BED12 annotation*  | Bed12 file format should be used with Gene ID column (column 4) containing the ENSEMBL ID and gene ID separated by an underscore (for example, “ENST00000456328_DDX11L1“).  |
 | *Genome fasta* | Standard genome fasta file (can be wrapped or unwrapped). |
 | *Gene expression file* | TSV file with: gene ID in first column, control TPM values in following columns, test TPM values in the columns following control TPM values |
 
 ## Usage ##
 
-RIFractionExpressed.pl
+### RIFractionExpressed ###
+
 
 Determines the fraction of expressed genes with statistically significant RI events at genes with a minimum input control or test TPM value.
 
-Also generates:
-	- lists of statistically significant negative and positive IncDiff RI events in
-	  expressed genes (includes gene expression values for each)
-	- file with list of genes without statistcially significant change in RI.
+#### Generates: ####
 
-Usage: RIFractionExpressed.pl [OPTIONS] -r <retained intron file (rMATS JCEC)> -e <expression file> -TPM <min TPMs condition 1,min TPMs condition 2> -SN <sample number condition 1,sample number condition 2> -f <FDR>
+* lists of statistically significant negative and positive IncDiff RI events in expressed genes (includes gene expression values for each)
+	  
+* file with list of genes without statistcially significant change in RI.
 
-Required:
+#### Required: ####
 	-r <retained intron file>
 	-e <expression file>
 	-TPM <min TPMs condition 1,min TPMs condition 2>
@@ -44,58 +44,79 @@ Required:
 	-SN <sample number condition 1,sample number condition 2>
 	-f <FDR>
 
-Additional:
+#### Additional: ####
 	-h help
 
-Example: RIFractionExpressed.pl -r PATH/RIfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
+```
+perl RIFractionExpressed.pl \
+-r <retained intron file (rMATS JCEC)> \
+-e <expression file> \
+-TPM <min TPMs condition 1,min TPMs condition 2> \
+-SN <sample number condition 1,sample number condition 2> \
+-f <FDR>
+```
 
+
+#### Example: ####
+```
+RIFractionExpressed.pl -r PATH/RIfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
+```
 
 RIFractionExpressedBatch.pl
 
 Example: perl RIFractionExpressedBatch.pl -r PATH/RI_files_directory -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
 
 
-—————
+### RIIntronExonSizes ###
 
-
-RIIntronExonSizes.pl
-
-Generates:
-	- lists of sizes for upstream exon, retained intron, and downstream exon for statistically
-	  significant positive and negative IncDiff retained intron events
-	- summary file with average sizes
-
-Usage: perl RIIntronExonSizes.pl [OPTIONS] -r <retained intron file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>
-
-Required:
+#### Generates: ####
+* lists of sizes for upstream exon, retained intron, and downstream exon for statistically significant positive and negative IncDiff retained intron events
+* summary file with average sizes
+	
+#### Required: ####
 	-r <retained intron file>
 	-a <bed12 annotation file>
 	-f <FDR>
 
-Additional:
+#### Additional: ####
 	-h help
 
-Example: perl RIIntronExonSizes.pl -r PATH/RIfile.txt -a PATH/bed12_annotation_file -f 0.05
+```
+perl RIIntronExonSizes.pl \
+	-r <retained intron file (rMATS JCEC)> \
+	-a <bed12 annotation file> \
+	-f <FDR>
+```
+	
+
+#### Example: ####
+
+```perl RIIntronExonSizes.pl -r PATH/RIfile.txt -a PATH/bed12_annotation_file -f 0.05```
 
 
 RIIntronExonSizesBatch.pl
 
 Example: perl RIIntronExonSizesBatch.pl -r PATH/RI_input_files_directory -a PATH/bed12_annotation_file -f 0.05
 
-
-—————
-
-
-RIMedley.pl
+### RIMedley ###
 
 Automatically runs the following on an rMATS RI JCEC file:
-	- RIFractionExpressed.pl
-	- RIIntronExonSizes.pl
-	- RISpliceSiteScoring.pl
+* RIFractionExpressed.pl
+* RIIntronExonSizes.pl
+* RISpliceSiteScoring.pl
 
-Usage: RIMedley.pl [OPTIONS] -r <retained intron file (rMATS JCEC)> -a <bed12 annotation file> -g <genome fasta file> -e <expression file> -TPM <min TPMs condition 1,min TPMs condition 2> -SN <sample number condition 1,sample number condition2> -f <FDR>
+```
+RIMedley.pl \
+-r <retained intron file (rMATS JCEC)> \
+-a <bed12 annotation file> \
+-g <genome fasta file> \
+-e <expression file> \
+-TPM <min TPMs condition 1,min TPMs condition 2> \
+-SN <sample number condition 1,sample number condition2> \
+-f <FDR>
+```
 
-Required:
+#### Required: ####
 	-r <retained intron file>
 	-a <bed12 annotation file>
 	-g <genome fasta file>
@@ -104,10 +125,11 @@ Required:
 	-SN <sample number condition 1,sample number condition 2>
 	-f <FDR>
 
-Additional:
+#### Additional: ####
 	-h help
 
-Example: perl RIMedley.pl -r PATH/RIfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
+#### Example: #### 
+```perl RIMedley.pl -r PATH/RIfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05```
 
 
 —————
@@ -398,8 +420,8 @@ Example: perl SpliceCompare.pl -i PATH/input_files_directory -o PATH/output_file
 
 References:
 
-1) Shen S., Park JW., Lu ZX., Lin L., Henry MD., Wu YN., Zhou Q., Xing Y. rMATS: Robust and Flexible Detection of Differential Alternative Splicing from Replicate RNA-Seq Data. PNAS, 111(51):E5593-601. doi: 10.1073/pnas.1419161111
+[^1]: Shen S., Park JW., Lu ZX., Lin L., Henry MD., Wu YN., Zhou Q., Xing Y. rMATS: Robust and Flexible Detection of Differential Alternative Splicing from Replicate RNA-Seq Data. PNAS, 111(51):E5593-601. doi: 10.1073/pnas.1419161111
 
-2) Park JW., Tokheim C., Shen S., Xing Y. Identifying differential alternative splicing events from RNA sequencing data using RNASeq-MATS. Methods in Molecular Biology: Deep Sequencing Data Analysis, 2013;1038:171-179 doi: 10.1007/978-1-62703-514-9_10
+[^2]: Park JW., Tokheim C., Shen S., Xing Y. Identifying differential alternative splicing events from RNA sequencing data using RNASeq-MATS. Methods in Molecular Biology: Deep Sequencing Data Analysis, 2013;1038:171-179 doi: 10.1007/978-1-62703-514-9_10
 
-3) Shen S., Park JW., Huang J., Dittmar KA., Lu ZX., Zhou Q., Carstens RP., Xing Y. MATS: A Bayesian Framework for Flexible Detection of Differential Alternative Splicing from RNA-Seq Data. Nucleic Acids Research, 2012;40(8):e61 doi: 10.1093/nar/gkr1291
+[^3]: Shen S., Park JW., Huang J., Dittmar KA., Lu ZX., Zhou Q., Carstens RP., Xing Y. MATS: A Bayesian Framework for Flexible Detection of Differential Alternative Splicing from RNA-Seq Data. Nucleic Acids Research, 2012;40(8):e61 doi: 10.1093/nar/gkr1291
