@@ -17,7 +17,6 @@ Perl libraries:
 git clone https://github.com/flemingtonlab/SpliceTools.git
 
 cd SpliceTools/bin
-
 ```
 ## File formats ##
 ### Differential splicing files ###
