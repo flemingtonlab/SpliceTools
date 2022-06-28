@@ -15,6 +15,7 @@ Perl libraries:
 ## Installation ##
 ```
 git clone https://github.com/flemingtonlab/SpliceTools.git
+
 cd SpliceTools/bin
 
 ```
