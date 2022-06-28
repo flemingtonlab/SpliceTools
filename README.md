@@ -17,10 +17,10 @@ Perl libraries:
 ### Differential splicing files ###
 | File  | Description |
 | :-- | :-- |
-| *AS files*  | Must be in rMATS[^1][^2][^3] output tsv format. SpliceTools utilizes columns 2-11, 20 and 23 of A3SS, A5SS, RI, and SE files and 2-13, 22, and 25 of rMATS MXE files (see [rMATS_file_formats.xlsx](https://github.com/flemingtonlab/SpliceTools/files/8995041/rMATS_file_formats.xlsx)) for those interested in converting other file formats for use in SpliceTools. |
-| *BED12 annotation*  | Bed12 file format should be used with Gene ID column (column 4) containing the ENSEMBL ID and gene ID separated by an underscore (for example, “ENST00000456328_DDX11L1“).  |
-| *Genome fasta* | Standard genome fasta file (can be wrapped or unwrapped). |
-| *Gene expression file* | TSV file with *gene ID* in first column, *control TPM values* in following columns, *test TPM values* in the columns following control TPM values |
+| AS files  | Must be in rMATS[^1][^2][^3] output tsv format. SpliceTools utilizes columns 2-11, 20 and 23 of A3SS, A5SS, RI, and SE files and 2-13, 22, and 25 of rMATS MXE files (see [rMATS_file_formats.xlsx](https://github.com/flemingtonlab/SpliceTools/files/8995041/rMATS_file_formats.xlsx)) for those interested in converting other file formats for use in SpliceTools. |
+| BED12 annotation  | Bed12 file format should be used with Gene ID column (column 4) containing the ENSEMBL ID and gene ID separated by an underscore (for example, “ENST00000456328_DDX11L1“).  |
+| Genome fasta | Standard genome fasta file (can be wrapped or unwrapped). |
+| Gene expression file | TSV file with *gene ID* in first column, *control TPM values* in following columns, *test TPM values* in the columns following control TPM values |
 ## Usage ##
 ### RIFractionExpressed ###
 Determines the fraction of expressed genes with statistically significant RI events at genes with a minimum input control or test TPM value.
