@@ -1,4 +1,6 @@
 # SpliceTools
+![Untitled-1](https://user-images.githubusercontent.com/23278950/176218942-46068321-f8ec-4137-9144-e30eeb76b248.jpg)
+
 ## Requirements ##
 * Python 3
 * Perl 5
