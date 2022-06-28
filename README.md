@@ -21,6 +21,12 @@ Perl libraries:
 | BED12 annotation  | Bed12 file format should be used with Gene ID column (column 4) containing the ENSEMBL ID and gene ID separated by an underscore (for example, “ENST00000456328_DDX11L1“).  |
 | Genome fasta | Standard genome fasta file (can be wrapped or unwrapped). |
 | Gene expression file | TSV file with *gene ID* in first column, *control TPM values* in following columns, *test TPM values* in the columns following control TPM values |
+## Installation ##
+```
+git clone https://github.com/flemingtonlab/SpliceTools.git
+cd SpliceTools/bin
+
+```
 ## Usage ##
 ### RIFractionExpressed ###
 Determines the fraction of expressed genes with statistically significant RI events at genes with a minimum input control or test TPM value.
@@ -54,7 +60,7 @@ perl RIFractionExpressed.pl \
 	
 ##### Example #####
 ```
-RIFractionExpressed.pl -r PATH/RIfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
+perl RIFractionExpressed.pl -r PATH/RIfile.txt -e PATH/expression.tsv -TPM 2,2 -SN 3,3 -f 0.05
 ```
 
 ##### Batch script #####
