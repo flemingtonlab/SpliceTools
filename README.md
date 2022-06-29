@@ -27,6 +27,8 @@ cd SpliceTools/bin
 | Genome fasta | Standard genome fasta file (can be wrapped or unwrapped). |
 | Gene expression file | TSV file with *gene ID* in first column, *control TPM values* in following columns, *test TPM values* in the columns following control TPM values |
 
+**Output files will be saved in the same directory as input AS files
+
 ## Usage ##
 ### RIFractionExpressed ###
 Determines the fraction of expressed genes with statistically significant RI events at genes with a minimum input control or test TPM value.
