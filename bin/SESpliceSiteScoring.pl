@@ -15,7 +15,7 @@ my $outdir;
 my $basename;
 
 sub program_info {
-    print "\n\tSESpliceSiteScoring.pl will generate:\n\t\t- lists of splice site scores (for plotting score distributions) for upstream donor,\n\t\t  skipped exon, and downstream acceptor sites for statistically significantly changed\n\t\t  exon skipping events.\n\t\t- summary file with average scores.\n\n\tNote: Inclusion of annotation file is optional but will generate data for annotated events\n\tfor comparison.\n\n\tUsage: SESpliceSiteScoring.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -g <genome fasta file> -f <FDR> -a <bed12 annotation file>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-g <genome fasta file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-a <bed12 annotation file> (optional)\n\t\t-h help\n\n\tExample: perl SESpliceSiteScoring.pl -s PATH/SEfile.txt -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05 \n\n";
+    print "\n\tSESpliceSiteScoring.pl will generate:\n\t\t- lists of splice site scores (for plotting score distributions) for upstream donor,\n\t\t  skipped exon, and downstream acceptor sites for statistically significantly changed\n\t\t  exon skipping events.\n\t\t- summary file with average scores.\n\n\tNote: Inclusion of annotation file is optional but will generate data for annotated events\n\tfor comparison.\n\n\tUsage: perl SESpliceSiteScoring.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -g <genome fasta file> -f <FDR> -a <bed12 annotation file>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-g <genome fasta file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-a <bed12 annotation file> (optional)\n\t\t-h help\n\n\tExample: perl SESpliceSiteScoring.pl -s PATH/SEfile.txt -g PATH/genome.fa -a PATH/bed12_annotation.bed -f 0.05 \n\n";
     exit;
 }
 

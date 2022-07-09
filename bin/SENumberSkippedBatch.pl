@@ -9,7 +9,7 @@ my @SE_files;
 my $program_path_name = dirname(__FILE__)."\/SENumberSkipped.pl";
 
 sub program_info {
-    print "\n\tSENumberSkippedBatch.pl will generate the following for all SE files in an input directory:\n\t\t- lists of all predicted SE isoforms with number of exons skipped\n\t\t- lists of isoforms with maximum number of skipped exons\n\t\t- statistics for number of exons skipped\n\n\tNote: Uses annotated exon information to determine number of exons skipped\n\t(0 exons skipped means that skipped exons were not in annotation file)\n\n\n\tUsage: SENumberSkippedBatch.pl [OPTIONS] -s <skipped exon files directory (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon files directory>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SENumberSkippedBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -f 0.05\n\n";
+    print "\n\tSENumberSkippedBatch.pl will generate the following for all SE files in an input directory:\n\t\t- lists of all predicted SE isoforms with number of exons skipped\n\t\t- lists of isoforms with maximum number of skipped exons\n\t\t- statistics for number of exons skipped\n\n\tNote: Uses annotated exon information to determine number of exons skipped\n\t(0 exons skipped means that skipped exons were not in annotation file)\n\n\n\tUsage: perl SENumberSkippedBatch.pl [OPTIONS] -s <skipped exon files directory (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon files directory>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SENumberSkippedBatch.pl -s PATH/SE_input_files_directory -a PATH/bed12_annotation.bed -f 0.05\n\n";
     exit;
 }
 

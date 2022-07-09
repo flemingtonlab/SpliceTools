@@ -15,7 +15,7 @@ my @neg_IncDiff_counts_array = ();
 my @pos_IncDiff_counts_array = ();
 
 sub program_info {
-    print "\n\tSENumberSkipped.pl will generate:\n\t\t- lists of all predicted SE isoforms with number of exons skipped\n\t\t- lists of isoforms with maximum number of skipped exons\n\t\t- statistics for number of exons skipped\n\n\tNote: Uses annotated exon information to determine number of exons skipped\n\t(0 exons skipped means that skipped exons were not in annotation file)\n\n\n\tUsage: SENumberSkipped.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SENumberSkipped.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05\n\n";
+    print "\n\tSENumberSkipped.pl will generate:\n\t\t- lists of all predicted SE isoforms with number of exons skipped\n\t\t- lists of isoforms with maximum number of skipped exons\n\t\t- statistics for number of exons skipped\n\n\tNote: Uses annotated exon information to determine number of exons skipped\n\t(0 exons skipped means that skipped exons were not in annotation file)\n\n\n\tUsage: perl SENumberSkipped.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SENumberSkipped.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05\n\n";
     exit;
 }
 

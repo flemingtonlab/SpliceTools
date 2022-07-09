@@ -13,7 +13,7 @@ my @pos_IncDiff_counts_array = ();
 
 
 sub program_info {
-    print "\n\tRIIntronExonSizes.pl will generate:\n\t\t- lists of sizes for upstream exon, retained intron, and downstream exon for statistically\n\t\t  significant positive and negative IncDiff retained intron events\n\t\t- summary file with average sizes\n\n\tUsage: RIIntronExonSizes.pl [OPTIONS] -r <retained intron file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-r <retained intron file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl RIIntronExonSizes.pl -r PATH/RIfile.txt -a PATH/bed12_annotation_file -f 0.05\n\n";
+    print "\n\tRIIntronExonSizes.pl will generate:\n\t\t- lists of sizes for upstream exon, retained intron, and downstream exon for statistically\n\t\t  significant positive and negative IncDiff retained intron events\n\t\t- summary file with average sizes\n\n\tUsage: perl RIIntronExonSizes.pl [OPTIONS] -r <retained intron file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-r <retained intron file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl RIIntronExonSizes.pl -r PATH/RIfile.txt -a PATH/bed12_annotation_file -f 0.05\n\n";
     exit;
 }
 

@@ -13,7 +13,7 @@ my $outdir;
 my $basename;
 
 sub program_info {
-    print "\n\tSEUnannotated.pl will generate statistics on the number of skipping events that are present\n\t(annotated) and not present (unannotated) in a bed12 input annotation file. Also outputs\n\tlists of annotated and unannotated events (pos IncDiff and neg IncDiff).\n\n\tUsage: SEUnannotated.pl [OPTIONS] -s <skipped exon file (rMATS)> -a <bed12 annotation file>  -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: SEUnannotated.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05\n\n";
+    print "\n\tSEUnannotated.pl will generate statistics on the number of skipping events that are present\n\t(annotated) and not present (unannotated) in a bed12 input annotation file. Also outputs\n\tlists of annotated and unannotated events (pos IncDiff and neg IncDiff).\n\n\tUsage: perl SEUnannotated.pl [OPTIONS] -s <skipped exon file (rMATS)> -a <bed12 annotation file>  -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SEUnannotated.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -f 0.05\n\n";
     exit;
 }
 

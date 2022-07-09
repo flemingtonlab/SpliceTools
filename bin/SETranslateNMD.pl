@@ -17,7 +17,7 @@ my $basename;
 my $outdir;
 
 sub program_info {
-    print "\n\tSETranslateNMD.pl will:\n\t\t- generate predicted RNA(DNA) isoform sequences based on annotated exon\n\t\t  structures upstream and downstream from skipping event\n\t\t- generate translated isoform sequences for all such events\n\t\t- generate separate listings of frameshifted protein isoforms\n\t\t- generate candidate neopeptides produced by frameshifts\n\t\t- generate lists of skipped exon protein sequences for in-frame\n\t\t  events for BATCH submission to NCBI conserved domain search\n\t\t  (https://www.ncbi.nlm.nih.gov/Structure/bwrpsb/bwrpsb.cgi)\n\t\t- Identify events predicted to undergo Nonsense Mediated RNA\n\t\t  Decay (NMD) and generate statistics on skipping events predicted\n\t\t  to undergo and not undergo NMD\n\n\n\tUsage: SETranslateNMD.pl [OPTIONS] -s <skipped exon file (rMATS)> -a <bed12 annotation file> -g <genome fasta file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-g <genome fasta file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SETranslateNMD.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -f 0.05\n\n";
+    print "\n\tSETranslateNMD.pl will:\n\t\t- generate predicted RNA(DNA) isoform sequences based on annotated exon\n\t\t  structures upstream and downstream from skipping event\n\t\t- generate translated isoform sequences for all such events\n\t\t- generate separate listings of frameshifted protein isoforms\n\t\t- generate candidate neopeptides produced by frameshifts\n\t\t- generate lists of skipped exon protein sequences for in-frame\n\t\t  events for BATCH submission to NCBI conserved domain search\n\t\t  (https://www.ncbi.nlm.nih.gov/Structure/bwrpsb/bwrpsb.cgi)\n\t\t- Identify events predicted to undergo Nonsense Mediated RNA\n\t\t  Decay (NMD) and generate statistics on skipping events predicted\n\t\t  to undergo and not undergo NMD\n\n\n\tUsage: perl SETranslateNMD.pl [OPTIONS] -s <skipped exon file (rMATS)> -a <bed12 annotation file> -g <genome fasta file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-g <genome fasta file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SETranslateNMD.pl -s PATH/SEfile.txt -a PATH/bed12_annotation.bed -g PATH/genome.fa -f 0.05\n\n";
     exit;
 }
 
@@ -146,6 +146,8 @@ sub makedirectories {
     `mkdir $outdir"\/5_skipped_exon_protein_sequences"`;
     `mkdir $outdir"\/5_skipped_exon_protein_sequences/temp"`;
     `mkdir $outdir"\/6_NMD"`;
+    `mkdir $outdir"\/6_NMD/SE_NMD_lists.bed"`;
+    `mkdir $outdir"\/6_NMD/gene_lists"`;
 }
 
 sub print_input_parameters {
@@ -536,8 +538,6 @@ sub translate {
         open(OUT2b, ">$outdir/3_frameshifted_isoforms/temp/Frameshifted_SE_isoforms_$file_ID.temp") or die "couldn't open translated frameshifted temporary output fasta file";
         open(OUT3,  ">$outdir/4_neopeptides/temp/SE_NEOPEPTIDES_$file_ID.fa") or die "couldn't open neopeptide output file";
         open(OUT3b,  ">$outdir/4_neopeptides/temp/SE_NEOPEPTIDES_$file_ID.temp") or die "couldn't open neopeptide output file";
-        open(OUT4,  ">$outdir/6_NMD/NMD_gene_SE_junction_info.$file_ID.bed") or die "couldn't open NMD SE junction info output file";
-        print OUT4 "chr\tSE_donor\tSE_acceptor\tIsoform_genename\tfiller\tstrand\n";
 
         my $gene_info;
         my $count = 0;
@@ -584,9 +584,6 @@ sub translate {
                     my $NMD;
                     if ($split_splice_donors[-2] - $stop_codon_position_on_transcript >= 50) {
                         $NMD = "NMD";
-                        my $chromosome = $split_gene_ID_SE_junction_info[0];
-                        $chromosome =~ s/\>//g;
-                        print OUT4 $chromosome, "\t", join("\t",  @split_gene_ID_SE_junction_info[1..5]), "\n";
                     }
                     else {
                         $NMD = "no_NMD";
@@ -601,9 +598,9 @@ sub translate {
                 }
             }
         }
-        print OUT1b "e,n,d\tend\tend";
-        print OUT2b "e,n,d\tend\tend";
-        print OUT3b "e,n,d\tend\tend";
+        print OUT1b "e,n,d,x_y\tend\tend";
+        print OUT2b "e,n,d,x_y\tend\tend";
+        print OUT3b "e,n,d,x_y\tend\tend";
         close(INF);
         close(OUT1);
         close(OUT1b);
@@ -752,46 +749,126 @@ sub translate {
 
         print "\t\tNMD calculations...\n\n";
         open(OUT, ">$outdir/6_NMD/SE_NMD_statistics.$file_ID.txt") or die "couldn't open NMD counts output file";
+        open(OUTa, ">$outdir/6_NMD/SE_NMD_lists.bed/SE_NMD.$file_ID.bed") or die "couldn't open NMD counts output file";
+        open(OUTb, ">$outdir/6_NMD/SE_NMD_lists.bed/SE_no_NMD.$file_ID.bed") or die "couldn't open NMD counts output file";
+        print OUTa "chr\tSE_donor\tSE_acceptor\tNMD_isoforms\tno_NMD_isoforms\tstrand\n";
+        print OUTb "chr\tSE_donor\tSE_acceptor\tno_NMD_isoforms\tno_NMD_isoforms\tstrand\n";
         $foreach_count = 0;
-        $previous_NMD = "";
         my $NMD = 0;
         my $no_NMD = 0;
+        my $gene_NMD = 0;
+        my $gene_no_NMD = 0;
+        my $previous_gene;
+        my @NMD_genes = ();
+        my @no_NMD_genes = ();
+        my @NMD_isoforms = ();
+        my @no_NMD_isoforms = ();
         my $previous_chr_junction_coords = "";
+        my $previous_strand;
         foreach my $elem(@NMD_file_lines) {
             my @split_elem = split("\t", $elem);
-            my @split_ID = split("\;", $split_elem[0]);
-
-            my @split_element_0 = split("\,", $split_elem[0]);
-            my $chr_junction_coords = join("", @split_element_0[0..2]);
-
+            my @split_info = split("\;", $split_elem[0]);       
+            my @split_info_0 = split("\,", $split_info[0]);
+            my $gene_isoform_ID = $split_info_0[3];
+            my @split_gene_isoform_ID = split("_", $gene_isoform_ID);
+            my $isoform_ID = $split_gene_isoform_ID[0];
+            my $chr_junction_coords = join("\t", @split_info_0[0..2]);
+            my $strand = $split_info_0[5];
             if ($foreach_count == 0) {
-                $previous_NMD = $split_elem[1];
                 $previous_chr_junction_coords = $chr_junction_coords;
-            }
-            elsif ($split_elem[1] eq $previous_NMD and $chr_junction_coords eq $previous_chr_junction_coords) {
-                if ($foreach_count == scalar(@NMD_file_lines)-1) {
-                    if ($previous_NMD eq "no_NMD") {
-                        $no_NMD++;
-                    }
-                    elsif ($previous_NMD eq "NMD") {
-                        $NMD++;
-                    }
+                $previous_strand = $strand;
+                $previous_gene = $split_gene_isoform_ID[1];
+                if($split_elem[1] eq "NMD") {
+                    push(@NMD_isoforms, $isoform_ID);
+                    $gene_NMD++;
+                }
+                elsif($split_elem[1] eq "no_NMD") {
+                    push(@no_NMD_isoforms, $isoform_ID);
+                    $gene_no_NMD++;
                 }
             }
-            else {
-                if ($previous_NMD eq "no_NMD") {
-                    $no_NMD++;
-                }
-                elsif ($previous_NMD eq "NMD") {
+            elsif ($foreach_count == scalar(@NMD_file_lines)-1) {
+                if ($gene_NMD > 0 and $gene_no_NMD > 0) {
+                    print OUTa $previous_chr_junction_coords, "\t", $previous_gene, "_", join("_", @NMD_isoforms), "\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $NMD_isoforms[0]);
+                    push(@NMD_genes, $previous_gene);
                     $NMD++;
                 }
-                $previous_NMD = $split_elem[1];
+                elsif ($gene_NMD == 0 and $gene_no_NMD > 0){
+                    print OUTb $previous_chr_junction_coords, "\t", $previous_gene, "\.\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $no_NMD_isoforms[0]);
+                    push(@no_NMD_genes, $previous_gene);
+                    $no_NMD++;
+                }
+                elsif ($gene_NMD > 0 and $gene_no_NMD == 0){
+                    print OUTa $previous_chr_junction_coords, "\t", $previous_gene, "_", join("_", @NMD_isoforms), "\t\.\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $NMD_isoforms[0]);
+                    push(@NMD_genes, $previous_gene);
+                    $NMD++;
+                }
+            }
+            elsif ($chr_junction_coords eq $previous_chr_junction_coords) {
+                if($split_elem[1] eq "NMD") {
+                    push(@NMD_isoforms, $isoform_ID);
+                    $gene_NMD++;
+                }
+                elsif($split_elem[1] eq "no_NMD") {
+                    push(@no_NMD_isoforms, $isoform_ID);
+                    $gene_no_NMD++;
+                }
+                
+            }
+            else {
+                if ($gene_NMD > 0 and $gene_no_NMD > 0) {
+                    print OUTa $previous_chr_junction_coords, "\t", $previous_gene, "_", join("_", @NMD_isoforms), "\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $NMD_isoforms[0]);
+                    push(@NMD_genes, $previous_gene);
+                    $NMD++;
+                }
+                elsif ($gene_NMD == 0 and $gene_no_NMD > 0){
+                    print OUTb $previous_chr_junction_coords, "\t", $previous_gene, "\.\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $no_NMD_isoforms[0]);
+                    push(@no_NMD_genes, $previous_gene);
+                    $no_NMD++;
+                }
+                elsif ($gene_NMD > 0 and $gene_no_NMD == 0){
+                    print OUTa $previous_chr_junction_coords, "\t", $previous_gene, "_", join("_", @NMD_isoforms), "\t\.\t", $previous_strand, "\n";
+                    my @split_gene_ID = split("_", $NMD_isoforms[0]);
+                    push(@NMD_genes, $previous_gene);
+                    $NMD++;
+                }
                 $previous_chr_junction_coords = $chr_junction_coords;
+                $previous_strand = $strand;
+                @NMD_isoforms = ();
+                @no_NMD_isoforms = ();
+                $gene_NMD = 0;
+                $gene_no_NMD = 0;
+                $previous_gene = $split_gene_isoform_ID[1];
+                if($split_elem[1] eq "NMD") {
+                    push(@NMD_isoforms, $isoform_ID);
+                    $gene_NMD++;
+                }
+                elsif($split_elem[1] eq "no_NMD") {
+                    push(@no_NMD_isoforms, $isoform_ID);
+                    $gene_no_NMD++;
+                }
             }
             $foreach_count++;
         }
-        print OUT "Number predicted to undergo NMD: ", $NMD, "\nNumber predicted to not undergo NMD: ", $no_NMD, "\n";
+        print OUT "Number predicted to undergo NMD: ", $NMD, "\n\tFraction predicted to undergo NMD: ", $NMD/($NMD+$no_NMD), "\n\nNumber predicted to not undergo NMD: ", $no_NMD, "\n\tFraction predicted to not undergo NMD: ", $no_NMD/($NMD+$no_NMD), "\n";
         close(OUT); 
+        close(OUTa);
+        close(OUTb);
+
+        open(OUTc, ">$outdir/6_NMD/gene_lists/SE_NMD.$file_ID.txt") or die "couldn't open NMD counts output file";
+        open(OUTd, ">$outdir/6_NMD/gene_lists/SE_no_NMD.$file_ID.txt") or die "couldn't open NMD counts output file";
+        my @unique_NMD_genes = unique(@NMD_genes);
+        my @unique_no_NMD_genes = unique(@no_NMD_genes);
+        print OUTc join("\n", @unique_NMD_genes);
+        print OUTd join("\n", @unique_no_NMD_genes);
+        close(OUTc);
+        close(OUTd);
+        
     }
 }
 
@@ -938,6 +1015,11 @@ sub codon2aa {
     else{
         die "Bad codon '$codon'!!\n";
     }
+}
+
+sub unique {
+  my %seen;
+  return grep { !$seen{$_}++ } @_;
 }
 
 options;

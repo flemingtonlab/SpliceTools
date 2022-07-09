@@ -14,7 +14,7 @@ my @pos_IncDiff_counts_array = ();
 my @annotation_array  = ();
 
 sub program_info {
-    print "\n\tSEIntronExonSizes.pl will generate:\n\t\t- lists of sizes for upstream exon, upstream intron, skipped exon, downstream intron,\n\t\t  and downstream exon for statistically significant positive and\n\t\t  negative IncDiff skipped exon events.\n\t\t- summary file with average sizes (for comparison, includes average sizes for potential\n\t\t  SE events based on input annotation file).\n\n\tUsage: SEIntronExonSizes.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SEIntronExonSizes.pl -s PATH/SEfile.txt -a PATH/bed12_annotation_file.bed -f 0.05\n\n";
+    print "\n\tSEIntronExonSizes.pl will generate:\n\t\t- lists of sizes for upstream exon, upstream intron, skipped exon, downstream intron,\n\t\t  and downstream exon for statistically significant positive and\n\t\t  negative IncDiff skipped exon events.\n\t\t- summary file with average sizes (for comparison, includes average sizes for potential\n\t\t  SE events based on input annotation file).\n\n\tUsage: perl SEIntronExonSizes.pl [OPTIONS] -s <skipped exon file (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-s <skipped exon file>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl SEIntronExonSizes.pl -s PATH/SEfile.txt -a PATH/bed12_annotation_file.bed -f 0.05\n\n";
     exit;
 }
 

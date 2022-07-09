@@ -9,7 +9,7 @@ my @RI_files;
 my $program_path_name = dirname(__FILE__)."\/RIIntronExonSizes.pl";
 
 sub program_info {
-    print "\n\tRIIntronExonSizesBatch.pl will generate the following for all files in an RI input files directory:\n\t\t- lists of sizes for upstream exon, retained intron, and downstream exon for statistically\n\t\t  significant positive and negative IncDiff retained intron events\n\t\t- summary file with average sizes\n\n\tUsage: RIIntronExonSizesBatch.pl [OPTIONS] -r <retained intron files directory (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-r <retained intron files directory>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl RIIntronExonSizesBatch.pl -r PATH/RI_input_files_directory -a PATH/bed12_annotation_file -f 0.05\n\n";
+    print "\n\tRIIntronExonSizesBatch.pl will generate the following for all files in an RI input files directory:\n\t\t- lists of sizes for upstream exon, retained intron, and downstream exon for statistically\n\t\t  significant positive and negative IncDiff retained intron events\n\t\t- summary file with average sizes\n\n\tUsage: perl RIIntronExonSizesBatch.pl [OPTIONS] -r <retained intron files directory (rMATS JCEC)> -a <bed12 annotation file> -f <FDR>\n\n\tRequired:\n\t\t-r <retained intron files directory>\n\t\t-a <bed12 annotation file>\n\t\t-f <FDR>\n\n\tAdditional:\n\t\t-h help\n\n\tExample: perl RIIntronExonSizesBatch.pl -r PATH/RI_input_files_directory -a PATH/bed12_annotation_file -f 0.05\n\n";
     exit;
 }
 
