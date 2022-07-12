@@ -9,7 +9,7 @@ path = sys.argv[1]
 df = pd.read_table(path, index_col=0)
 
 c = sns.clustermap(data=df, cmap='Blues', figsize=(30,30), z_score=None, \
-    yticklabels=1, xticklabels=1, square=True, method="ward", linewidth=.1)
+    yticklabels=1, xticklabels=1,  method="ward", linewidth=.1)
 
 # methods: ward, median, centroid, weighted, average, single
 

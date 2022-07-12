@@ -613,7 +613,7 @@ sub compare {
         my $clustermap_all = $output_dir_path_2."/3_data_matrix_minus_log10_pval/1_data_matrix_all.tsv";
         my $clustermap_pos = $output_dir_path_2."/3_data_matrix_minus_log10_pval/2_data_matrix_pos_IncDiff.tsv";
         my $clustermap_neg = $output_dir_path_2."/3_data_matrix_minus_log10_pval/3_data_matrix_neg_IncDiff.tsv";
-        my $clustmap_path = $dirname."/1_1_accessory_scripts/7_clustermap_3.py";
+        my $clustmap_path = $dirname."/accessory_scripts/clustermap.py";
 
         `python $clustmap_path $clustermap_all`;
         `python $clustmap_path $clustermap_pos`;
