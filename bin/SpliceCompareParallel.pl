@@ -272,8 +272,21 @@ sub summarize {
 
 sub compare {
     print "Matching alt splicing events...\n\n";
-    my @splice_junction_directories_array = ('A3SS_files', 'A5SS_files', 'MXE_files', 'RI_files', 'SE_files'); 
-    my $pm = Parallel::ForkManager->new(5);
+    my @splice_junction_directories = ('A3SS_files', 'A5SS_files', 'MXE_files', 'RI_files', 'SE_files'); 
+    my @splice_junction_directories_array = ();
+    my $threads = 0;
+    foreach my $splice_junction_directory(@splice_junction_directories) {
+        opendir my $dir, "/$out_dir/$splice_junction_directory/1_rMATS_sig/1_original/" or die "Can't open directory: $!";
+        my @test = ();
+        foreach my $f (sort readdir $dir) {
+            next if ($f eq '.' || $f eq '..');
+            push(@test, $f);
+        }
+        next if (!@test);
+        $threads++;
+        push(@splice_junction_directories_array, $splice_junction_directory);
+    }
+    my $pm = Parallel::ForkManager->new($threads);
     DATA_LOOP:
     foreach my $splice_junction_directory(@splice_junction_directories_array) {
         my $pid = $pm->start and next DATA_LOOP;

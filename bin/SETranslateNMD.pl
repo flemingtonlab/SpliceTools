@@ -751,6 +751,9 @@ sub translate {
         open(OUT, ">$outdir/6_NMD/SE_NMD_statistics.$file_ID.txt") or die "couldn't open NMD counts output file";
         open(OUTa, ">$outdir/6_NMD/SE_NMD_lists.bed/SE_NMD.$file_ID.bed") or die "couldn't open NMD counts output file";
         open(OUTb, ">$outdir/6_NMD/SE_NMD_lists.bed/SE_no_NMD.$file_ID.bed") or die "couldn't open NMD counts output file";
+        open(OUTnote, ">$outdir/6_NMD/SE_NMD_lists.bed/1_note_about_loading_bed_files_on_IGV.txt") or die "couldn't open NMD counts output file";
+        print OUTnote "NOTE: Header line of bed files must be deleted to load on IGV.\n";
+        close(OUTnote);
         print OUTa "chr\tSE_donor\tSE_acceptor\tNMD_isoforms\tno_NMD_isoforms\tstrand\n";
         print OUTb "chr\tSE_donor\tSE_acceptor\tno_NMD_isoforms\tno_NMD_isoforms\tstrand\n";
         $foreach_count = 0;
@@ -773,6 +776,7 @@ sub translate {
             my @split_gene_isoform_ID = split("_", $gene_isoform_ID);
             my $isoform_ID = $split_gene_isoform_ID[0];
             my $chr_junction_coords = join("\t", @split_info_0[0..2]);
+            $chr_junction_coords =~ s/^\>//;
             my $strand = $split_info_0[5];
             if ($foreach_count == 0) {
                 $previous_chr_junction_coords = $chr_junction_coords;
@@ -795,7 +799,7 @@ sub translate {
                     $NMD++;
                 }
                 elsif ($gene_NMD == 0 and $gene_no_NMD > 0){
-                    print OUTb $previous_chr_junction_coords, "\t", $previous_gene, "\.\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
+                    print OUTb $previous_chr_junction_coords, "\t", $previous_gene, "_\.\t", join("_", @no_NMD_isoforms), "\t", $previous_strand, "\n";
                     my @split_gene_ID = split("_", $no_NMD_isoforms[0]);
                     push(@no_NMD_genes, $previous_gene);
                     $no_NMD++;
