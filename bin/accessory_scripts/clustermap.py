@@ -29,7 +29,7 @@ c.ax_heatmap.set_yticklabels(c.ax_heatmap.get_yticklabels(), fontsize=fontsize, 
 
 row_index = c.dendrogram_row.reordered_ind
 labels = [df.index[i] for i in row_index]
-
+plt.tight_layout()
 plt.savefig(path +'.svg')
 
 
