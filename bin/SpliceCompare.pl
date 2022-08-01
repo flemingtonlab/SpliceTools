@@ -274,7 +274,7 @@ sub compare {
     my @splice_junction_directories_array = ('A3SS_files', 'A5SS_files', 'MXE_files', 'RI_files', 'SE_files'); 
     foreach my $splice_junction_directory(@splice_junction_directories_array) {
         my @output_4_data_array = ();
-        opendir my $dir, "/$out_dir/$splice_junction_directory/1_rMATS_sig/1_original/" or die "Can't open directory: $!";
+        opendir my $dir, "$out_dir/$splice_junction_directory/1_rMATS_sig/1_original" or die "Can't open directory: $!";
         my @files = ();
         foreach my $f (sort readdir $dir) {
             next if ($f eq '.' || $f eq '..');

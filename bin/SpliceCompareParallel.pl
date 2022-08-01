@@ -276,7 +276,7 @@ sub compare {
     my @splice_junction_directories_array = ();
     my $threads = 0;
     foreach my $splice_junction_directory(@splice_junction_directories) {
-        opendir my $dir, "/$out_dir/$splice_junction_directory/1_rMATS_sig/1_original/" or die "Can't open directory: $!";
+        opendir my $dir, "$out_dir/$splice_junction_directory/1_rMATS_sig/1_original" or die "Can't open directory: $!";
         my @test = ();
         foreach my $f (sort readdir $dir) {
             next if ($f eq '.' || $f eq '..');
@@ -291,7 +291,7 @@ sub compare {
     foreach my $splice_junction_directory(@splice_junction_directories_array) {
         my $pid = $pm->start and next DATA_LOOP;
         my @output_4_data_array = ();
-        opendir my $dir, "/$out_dir/$splice_junction_directory/1_rMATS_sig/1_original/" or die "Can't open directory: $!";
+        opendir my $dir, "$out_dir/$splice_junction_directory/1_rMATS_sig/1_original" or die "Can't open directory: $!";
         my @files = ();
         foreach my $f (sort readdir $dir) {
             next if ($f eq '.' || $f eq '..');
