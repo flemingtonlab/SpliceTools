@@ -18,7 +18,7 @@ metric: ‘braycurtis’, ‘canberra’, ‘chebyshev’, ‘cityblock’, ‘c
 '''
 
 length = len(df.index)
-fontsize = 1500 // length
+fontsize = 500 // length
 
 plt.setp(c.ax_heatmap.xaxis.get_majorticklabels(),rotation=90)
 plt.setp(c.ax_heatmap.yaxis.get_majorticklabels(),rotation=0)
