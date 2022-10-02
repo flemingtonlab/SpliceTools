@@ -162,7 +162,7 @@ sub genome_fasta_file_unwrapper {
         }
         elsif (eof(INF)) {
             push(@line_array, $line);
-            push(@genome_array, @line_array);
+            push(@genome_array, join("", @line_array));
         }
         else {  
             push(@line_array, $line);
