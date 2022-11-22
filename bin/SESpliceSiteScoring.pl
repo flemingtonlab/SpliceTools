@@ -156,9 +156,10 @@ sub genome_fasta_file_unwrapper {
         if ($. == 1) {
             push(@genome_array, $line);
         }
-        elsif ($line =~ m/^\>chr/ || $line =~ m/^\> chr/) {
+        elsif ($line =~ m/^\>chr/) {
             push(@genome_array, join("", @line_array));
-            push(@genome_array, $line);
+            my @split_line = split(" ", $line);
+            push(@genome_array, $split_line[0]);
             @line_array = ();
         }
         elsif (eof(INF)) {
