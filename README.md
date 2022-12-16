@@ -36,7 +36,7 @@ Determines the fraction of expressed genes with statistically significant RI eve
 Generates:
 * Lists of statistically significant negative and positive IncDiff RI events in expressed genes (includes gene expression values for each)
 	  
-* File with list of genes without statistcially significant change in RI.
+* File with list of genes without statistically significant change in RI.
 
 ##### Usage #####
 ```
