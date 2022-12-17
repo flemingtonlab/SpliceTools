@@ -169,7 +169,7 @@ Determines the fraction of expressed genes with statistically significant SE eve
 
 Also generates:
 * Lists of statistically significant negative and positive IncDiff SE events in expressed genes (includes gene expression values for each)
-* File with list of genes without statistcially significant exon skipping.
+* File with list of genes without statistically significant exon skipping.
 
 ##### Usage #####
 ```
@@ -390,7 +390,7 @@ perl SEUnannotated.pl \
 Takes groups of rMATS differential splicing files and outputs lists of statistically significant events with positive IncDiff and negative IncDiff and summary files. It then compares differential splicing changes across experiments to assess functional relationships (hypergeometric test), outputting pval matrices, -log10(pval) matrices, and .svg graphical representation files displaying -log10(pval) of all comparisons.
 
 Important notes:
- * Input file names must end in one or more of the following suffexes:
+ * Input file names must end in one or more of the following suffixes:
 		A3SS.MATS.JCEC.txt
 		A5SS.MATS.JCEC.txt
 		MXE.MATS.JCEC.txt
