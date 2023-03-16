@@ -860,7 +860,11 @@ sub translate {
             }
             $foreach_count++;
         }
-        print OUT "Number predicted to undergo NMD: ", $NMD, "\n\tFraction predicted to undergo NMD: ", $NMD/($NMD+$no_NMD), "\n\nNumber predicted to not undergo NMD: ", $no_NMD, "\n\tFraction predicted to not undergo NMD: ", $no_NMD/($NMD+$no_NMD), "\n";
+        my $tot = $NMD+$no_NMD;
+        if ($tot == 0) {
+            $tot = 1;
+        }
+        print OUT "Number predicted to undergo NMD: ", $NMD, "\n\tFraction predicted to undergo NMD: ", $NMD/($tot), "\n\nNumber predicted to not undergo NMD: ", $no_NMD, "\n\tFraction predicted to not undergo NMD: ", $no_NMD/($tot), "\n";
         close(OUT); 
         close(OUTa);
         close(OUTb);

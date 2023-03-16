@@ -235,9 +235,9 @@ sub annotated_vs_unannotated_SE_analysis {
     print OUTan $header;
     my $SE_junc_match = 0;
     my $matched_sum_neg = 0;
-    my $unmatched_sum_neg = -1;
+    my $unmatched_sum_neg = 0;
     my $matched_sum_pos = 0;
-    my $unmatched_sum_pos = -1;
+    my $unmatched_sum_pos = 0;
     my $prev_SE_elem = "null";
     my $prev_amp = 0;
     my $prevSEOut;
@@ -297,7 +297,15 @@ sub annotated_vs_unannotated_SE_analysis {
             print OUTup $prevSEOut;
         }
     } 
-    print OUT "Negative SE values\n\tAnnotated skipping events: ", $matched_sum_neg, "\n\tFraction annotated: ", $matched_sum_neg/($matched_sum_neg + $unmatched_sum_neg), "\n\n\tUnannotated skipping events: ", $unmatched_sum_neg, "\n\tFraction unannotated: ", $unmatched_sum_neg/($matched_sum_neg + $unmatched_sum_neg),"\n\nPositive SE values\n\tAnnotated skipping events: ", $matched_sum_pos, "\n\tFraction annotated: ", $matched_sum_pos/($matched_sum_pos + $unmatched_sum_pos), "\n\n\tUnannotated skipping events: ", $unmatched_sum_pos, "\n\tFraction unannotated: ", $unmatched_sum_pos/($matched_sum_pos + $unmatched_sum_pos);
+    my $sum_neg = $matched_sum_neg + $unmatched_sum_neg;
+    if ($sum_neg == 0) {
+        $sum_neg = 1;
+    }
+    my $sum_pos = $matched_sum_pos + $unmatched_sum_pos;
+    if ($sum_pos == 0) {
+        $sum_pos = 1;
+    }
+    print OUT "Negative SE values\n\tAnnotated skipping events: ", $matched_sum_neg, "\n\tFraction annotated: ", $matched_sum_neg/($sum_neg), "\n\n\tUnannotated skipping events: ", $unmatched_sum_neg, "\n\tFraction unannotated: ", $unmatched_sum_neg/($sum_neg),"\n\nPositive SE values\n\tAnnotated skipping events: ", $matched_sum_pos, "\n\tFraction annotated: ", $matched_sum_pos/($sum_pos), "\n\n\tUnannotated skipping events: ", $unmatched_sum_pos, "\n\tFraction unannotated: ", $unmatched_sum_pos/($sum_pos);
     close(OUT);
     close(OUTup);
     close(OUTun);
