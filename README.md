@@ -1,6 +1,7 @@
 # SpliceTools
 ![Untitled-1](https://user-images.githubusercontent.com/23278950/176218942-46068321-f8ec-4137-9144-e30eeb76b248.jpg)
-
+## Citation ##
+Erik K Flemington, Samuel A Flemington, Tina M O’Grady, Melody Baddoo, Trang Nguyen, Yan Dong, Nathan A Ungerleider, SpliceTools, a suite of downstream RNA splicing analysis tools to investigate mechanisms and impact of alternative splicing, Nucleic Acids Research, 2023;, gkad111, https://doi.org/10.1093/nar/gkad111
 ## Requirements ##
 * Python 3
 * Perl 5
