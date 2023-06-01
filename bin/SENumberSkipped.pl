@@ -138,12 +138,15 @@ sub prepare_skipped_exon_array {
     open(OUT, ">$skipped_exon_file.sorted.deduplicated.tsv") or die "couldn't open deduplicated skipped exon output file";
     my @previous_amplitude_array = ();
     my $previous_line_minus_amplitude;
+    my $line_minus_amplitude;
+    my $amplitude;
     my $count = 1;
+    my $average_amplitude;
     while(my $line = <INF>) {
         chomp($line);
         my @split_line = split("\t", $line);
-        my $line_minus_amplitude = join("\t", @split_line[0..3]);
-        my $amplitude = $split_line[4];
+        $line_minus_amplitude = join("\t", @split_line[0..3]);
+        $amplitude = $split_line[4];
 
         if ($. == 1) {
             push(@previous_amplitude_array, $amplitude);
@@ -155,7 +158,7 @@ sub prepare_skipped_exon_array {
         }
         else {
             my $total = eval join '+', @previous_amplitude_array;
-            my $average_amplitude = $total/$count;
+            $average_amplitude = $total/$count;
             print OUT $previous_line_minus_amplitude, "\t", $average_amplitude, "\n";
             $previous_line_minus_amplitude = $line_minus_amplitude;
             @previous_amplitude_array = ();
@@ -163,6 +166,9 @@ sub prepare_skipped_exon_array {
             $count = 1;
         }
     }
+    my $total = eval join '+', @previous_amplitude_array;
+    $average_amplitude = $total/$count;
+    print OUT $previous_line_minus_amplitude, "\t", $average_amplitude, "\n";
     close(INF);
     close(OUT);
     `rm $skipped_exon_file.sorted.tsv`;
@@ -298,7 +304,12 @@ sub count_max_skipped_exons {
                 $skipped_exon_count++;
             }
         }
-        if ($SE_ID eq $previous_SE_ID) {
+        if ($. == 1) {
+            $running_skipped_exons_count = $skipped_exon_count;
+            $max_counts_line = $line;
+            $previous_SE_ID = $SE_ID;
+        }
+        elsif ($SE_ID eq $previous_SE_ID) {
             if ($skipped_exon_count > $running_skipped_exons_count) {
                 $running_skipped_exons_count = $skipped_exon_count;
                 $max_counts_line = $line;
@@ -310,15 +321,20 @@ sub count_max_skipped_exons {
                 print OUT2 $line, "\t", $skipped_exon_count, "\n";
             }
         }
-        elsif ($SE_ID ne $previous_SE_ID) {
-            if ($IncDiff < 0 and $. > 1) {
+        elsif ($SE_ID ne $previous_SE_ID) {  
+            my @split_max_counts_line = split("\t", $max_counts_line);
+            if ($split_max_counts_line[17] < 0) {
                 print OUT1 $max_counts_line, "\t", $running_skipped_exons_count, "\n";
                 print OUT3 $max_counts_line, "\t", $running_skipped_exons_count, "\n";
-                push (@neg_IncDiff_counts_array, $running_skipped_exons_count);
             }
-            elsif ($IncDiff > 0 and $. > 1) {
+            elsif ($split_max_counts_line[17] > 0) {
                 print OUT2 $max_counts_line, "\t", $running_skipped_exons_count, "\n";
                 print OUT4 $max_counts_line, "\t", $running_skipped_exons_count, "\n";
+            }
+            if ($IncDiff < 0) {
+                push (@neg_IncDiff_counts_array, $running_skipped_exons_count);
+            }
+            elsif ($IncDiff > 0) {
                 push (@pos_IncDiff_counts_array, $running_skipped_exons_count);
             }
             $running_skipped_exons_count = $skipped_exon_count;
