@@ -1,5 +1,5 @@
 use warnings;
-use strict;  
+use strict;
 use File::Basename;
 use Parallel::ForkManager;
 
@@ -26,7 +26,7 @@ sub options {
     if (scalar @ARGV == 0) {
         program_info;
         exit;
-    }  
+    }
     for (my $i=0; $i < scalar @ARGV; $i++) {
         if ($ARGV[$i] eq "\-i") {
             $path_to_files = $ARGV[$i+1];
@@ -50,7 +50,7 @@ sub options {
     }
 }
 
-sub qc { 
+sub qc {
     if ($path_to_files eq "") {
         print "\nInput files directory not defined!\n";
         program_info;
@@ -83,8 +83,11 @@ sub read_input_dir {
     opendir my $input_dir, "$path_to_files" or die "Can't open directory: $!";
     foreach my $g (sort readdir $input_dir) {
         next if ($g eq '.' || $g eq '..' || $g eq '.DS_Store');
-        my $path_files = $path_to_files."/".$g;
-        push(@files, $path_files);
+        if ($g =~ m/\./g) {
+          my $path_files = $path_to_files."/".$g;
+          push(@files, $path_files);
+          print($path_files, "\n");
+        }
     }
     closedir $input_dir;
 }
@@ -204,7 +207,7 @@ sub process_JCEC_files {
 sub summarize {
     print "Summarizing alt splicing\n\n"; ####################
     open(OUT, ">$out_dir/1_1_splicing_summaries_all_samples.tsv") or die "couldn't open output file";
-    
+
     foreach my $sample_name_file(@unique_sample_name_array) {
         print OUT $sample_name_file;
         my $A3SS_sample_output_name = $sample_name_file."_A3SS.MATS.JCEC.txt";
@@ -217,7 +220,7 @@ sub summarize {
         my @decreased_event_array = ();
         my @fraction_up_array = ();
         my @fraction_down_array = ();
-        my @directory_tails = ("A3SS_files/1_rMATS_sig/1_sig_all/$A3SS_sample_output_name", "A5SS_files/1_rMATS_sig/1_sig_all/$A5SS_sample_output_name", "MXE_files/1_rMATS_sig/1_sig_all/$MXE_sample_output_name", "RI_files/1_rMATS_sig/1_sig_all/$RI_sample_output_name", "SE_files/1_rMATS_sig/1_sig_all/$SE_sample_output_name");       
+        my @directory_tails = ("A3SS_files/1_rMATS_sig/1_sig_all/$A3SS_sample_output_name", "A5SS_files/1_rMATS_sig/1_sig_all/$A5SS_sample_output_name", "MXE_files/1_rMATS_sig/1_sig_all/$MXE_sample_output_name", "RI_files/1_rMATS_sig/1_sig_all/$RI_sample_output_name", "SE_files/1_rMATS_sig/1_sig_all/$SE_sample_output_name");
         foreach my $directory_tail(@directory_tails) {
             next unless (-e $out_dir."/".$directory_tail);
             my $header = basename($directory_tail);
@@ -272,7 +275,7 @@ sub summarize {
 
 sub compare {
     print "Matching alt splicing events...\n\n";
-    my @splice_junction_directories = ('A3SS_files', 'A5SS_files', 'MXE_files', 'RI_files', 'SE_files'); 
+    my @splice_junction_directories = ('A3SS_files', 'A5SS_files', 'MXE_files', 'RI_files', 'SE_files');
     my @splice_junction_directories_array = ();
     my $threads = 0;
     foreach my $splice_junction_directory(@splice_junction_directories) {
@@ -392,9 +395,9 @@ sub compare {
                 my @array_1 = @analysis_data_array[$array_starts[$a]..($array_starts[$a+1]-1)];
                 my @array_2 = @analysis_data_array[$array_starts[$b]..($array_starts[$b+1]-1)];
                 my $array_1_name = shift(@array_1);
-                
+
                 my $array_2_name = shift(@array_2);
-                
+
                 my @combined_array_1_and_2 = (@array_1, @array_2);
                 my @unique_array_1_and_2_elements = unique(@combined_array_1_and_2);
                 my $total_jncts_detected_across_samples = @unique_array_1_and_2_elements;
@@ -493,7 +496,7 @@ sub compare {
                     push(@hypergeo_output_matrix_name_array, $array_1_name, $array_2_name);
                 }
                 else {
-                    push(@hypergeo_output_matrix_name_array, $array_2_name);    
+                    push(@hypergeo_output_matrix_name_array, $array_2_name);
                 }
 
                 my $output_4_data_array_1 = $array_1_name."\t".$significant_all_array_1."\t".$sig_pos_IncDiff_array_1."\t".($sig_pos_IncDiff_array_1+0.05)/($significant_all_array_1+0.05)."\t".$sig_neg_IncDiff_array_1."\t".($sig_neg_IncDiff_array_1+0.05)/($significant_all_array_1+0.05)."\t".scalar @array_1;
@@ -528,7 +531,7 @@ sub compare {
             print OUT1e $hypergeo_output_matrix_name_array[$y];
             print OUT1f $hypergeo_output_matrix_name_array[$y];
             print OUT1g $hypergeo_output_matrix_name_array[$y];
-        
+
             my $x = 0;
             for (my $z=0; $z<$files_number; $z++) {
                 if ($z > $y) {
@@ -665,5 +668,3 @@ compare;
 
 `rm -r $out_dir/*/1_rMATS_sig/1_original`;
 print "\nDONE! with all analyses\n\n";
-
-
